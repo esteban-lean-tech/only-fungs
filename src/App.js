@@ -92,8 +92,6 @@ export default function App() {
             />
           );
         })}
-
-        <button onClick={(e) => writeToFeed('add wallet above here', contractId)}>Write to Feed</button>
       </main>
     </div>
   );
