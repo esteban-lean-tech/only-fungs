@@ -4,7 +4,6 @@ import NFT from './nft';
 import Navbar from './Navbar';
 import { readContract, interactWrite } from 'smartweave';
 import Arweave from 'arweave';
-import pdf from './public/test.pdf';
 
 const wallet = {
   d: 'IN7pf8Fyw11Qo6yCs7AGnZuSMK0wr9BfnZ2obOEHrysFzO_7mUSBMQ5NxaRwKwUuzMLAieO4Ilf8Xy4E8-0JNpQrKT0ikujl6vwIVSv1iuH3_5PXFKU3AvN5GpQm1LVLY9pHNNEviq95uhYfNbwKEZm6qDMdyQcfrp0qDyF33824SN1Jr7h9PzPOvBHBi_WYzHVYbfe282bzx5GmQZiFHHfJS4jxvJt1ZwEJm5U-c6LveZBVEpir81jea3i7rU-YrsolqnKD4dUppSMANvHmMIjxXCM6CWerwYVuFzH9qOq0leeco8F79rGMfgnz4Il9SlSc3YasHtf-gmZdy6PTx9eRTUeOq6LhFLMFqw3a14_bmzophg2pRP01w2po3yDQXWxRLrTSwrh4H-Y8RuG8wMB-Y9oAusavr7MIiXUih4vFNg8GBNzpvWdRxhqQiKQe1i_hq8D-Vv5NFJ_MAHg98-eeO5a2GDGrYqWrs4fSS1kyAIMJayIoHjCDMDsgX4KO0zmmMbbqzD2Hx8bjxPhxV7fAAu8zQQ2hsnFOHY4DCEg9EctoET7iq-r-wqxFXpRWnGezAeH4aNsGVoRrsaO4AlOjCWGlUHeRtQATzTi2FBEVwULRNM6i8LqTYbfZGcUh6V2G-TUOy8lqkYBCkpEZKiP2w40YAjHPdUStNdx2M2E',
@@ -24,28 +23,6 @@ async function getFeed(contractId) {
   const latestState = await readContract(arweaveInstance, contractId);
   console.log('FEED ', latestState);
   return latestState;
-}
-
-async function writeTransaction() {
-  const arweave = Arweave.init();
-  let data = btoa(pdf);
-
-  console.log('DATA ', data);
-
-  let transaction = await arweave.createTransaction({ data: data }, wallet);
-  transaction.addTag('Content-Type', 'application/pdf');
-  console.log('TRANSACTION ', transaction);
-  const id = await arweave.transactions.sign(transaction, wallet);
-
-  let uploader = await arweave.transactions.getUploader(transaction);
-  while (!uploader.isComplete) {
-    await uploader.uploadChunk();
-    console.log(
-      `${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`
-    );
-  }
-  console.log('ID IN WRITE TRANSACTION ', id);
-  return id;
 }
 
 async function writeToFeed(keys, contractId) {
@@ -118,8 +95,6 @@ export default function App() {
           );
         })}
       </main>
-
-      <button onClick={writeTransaction}> Write transaction data </button>
     </div>
   );
 }
