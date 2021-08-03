@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Deploy
+
+> You'll need to have an [arweave wallet](https://docs.arweave.org/info/wallets/arweave-web-extension-wallet) and keyfile to be able to deploy
+
+`npm run deploy -- --key-file path/to/key/file.json`
+
 ## Available Scripts
 
 In the project directory, you can run:
