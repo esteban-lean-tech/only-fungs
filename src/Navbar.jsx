@@ -115,14 +115,12 @@ export const Navbar = () => {
     console.log('upload image');
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      console.log('IMG ', img);
+
+      //   TODO: Get MIME PROGRAMATICALLY
+      let mime = img.type;
       setImage(URL.createObjectURL(img));
 
-      img.arrayBuffer((buffer) => {
-        console.log('THIS IS THE BUFFER ', buffer);
-        writeTransaction(buffer);
-      });
-      //   const buffer = reader.readAsArrayBuffer(img);
+      reader.readAsArrayBuffer(img);
 
       //   reader.readAsArrayBuffer(img);
     }
