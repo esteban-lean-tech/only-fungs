@@ -1,12 +1,4 @@
-// Immortagram:
-// Supports just one level of names.
-// Supports transferring a name.
-// Supports associating a string with a name.
-// Supports giving up a name.
-
-// Note: this is untested example atm.
-
-// TODO: require a minimum reward or burn of Ar to register a name.
+// onlyfunge:
 
 const max_caption_length = 280;
 
@@ -17,9 +9,6 @@ export function handle (state, action) {
     }
     if (typeof action.input.imageurl !== 'string') {
       throw new ContractError('Image URL')
-    }
-    if (state.names[action.input.name]) {
-      throw new ContractError('Name already registered')
     }
     state.feed.push({
       ownedBy: action.caller,
