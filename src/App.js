@@ -4,7 +4,6 @@ import NFT from './nft';
 import Navbar from './Navbar';
 import { readContract, interactWrite } from 'smartweave';
 import Arweave from 'arweave';
-import { write } from 'ieee754';
 import pdf from './public/test.pdf';
 
 const wallet = {

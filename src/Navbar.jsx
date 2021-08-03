@@ -95,6 +95,14 @@ export const Navbar = () => {
     setPostImageModalIsOpen(false);
   };
 
+  //   async function base64ToFile(dataURL, fileName) {
+  //     const arr = dataURL.split(',');
+  //     const mime = arr[0].match(/:(.*?);/)[1];
+  //     return fetch(dataURL).then(function (result) {
+  //       return result.arrayBuffer();
+  //     });
+  //   }
+
   const uploadImage = (event) => {
     var reader = new FileReader();
 
