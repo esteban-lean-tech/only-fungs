@@ -8,6 +8,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 `npm run deploy -- --key-file path/to/key/file.json`
 
+## Run Smart Contract
+`smartweave create ./contracts/immortagram.js ./contracts/initialState.json  --key-file <path to your keyfile>`
+> Run `arweave status <txn Id>` to view status
 ## Available Scripts
 
 In the project directory, you can run:
