@@ -74,6 +74,8 @@ export default function App() {
       console.log('THIS IS FEED ', feed.feed);
       setFeed(feed.feed);
     })();
+
+    writeToFeed('blank', contractId);
   }, []);
 
   return (

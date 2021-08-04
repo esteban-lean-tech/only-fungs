@@ -12,6 +12,8 @@ import Fade from '@material-ui/core/Fade';
 import Backdrop from '@material-ui/core/Backdrop';
 import TextField from '@material-ui/core/TextField';
 import Arweave from 'arweave';
+import { readContract, interactWrite } from 'smartweave';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,18 +42,41 @@ const useStyles = makeStyles((theme) => ({
 export const Navbar = () => {
   const classes = useStyles();
   const [authed, setAuthed] = useState(true);
+  const [caption, setCaption] = useState(null);
   const [postImageModalIsOpen, setPostImageModalIsOpen] = useState(false);
   const [image, setImage] = useState(null);
-  const [base64img, setbase64img] = useState(null);
   const [keys, setKeys] = useState(null);
   const [mime, setMime] = useState(null);
   const [imageData, setImageData] = useState(null);
+  const [contractId, setContractId] = useState(
+    'pnTOOL1MebQ-c4Dw4zgMKvCdPbvsCC7JTTDmEjAr0qI'
+  );
 
   useEffect(() => {
     console.log('THIS IS THE IMAGE ', image);
     // TODO: Set auth state here
     setAuthed(true);
   }, []);
+
+  async function writeToFeed(keys, contractId, id) {
+    console.log('write to feed clicked!');
+    const arweave = Arweave.init();
+    // let url = id;
+    const input = {
+      caption,
+      imageurl: 'test',
+      name: 'Varun',
+      function: 'post',
+    };
+    let jsonKeys = JSON.parse(keys);
+    console.log('WRF ', keys);
+    console.log('WRF ARWEAVE ', arweave);
+    console.log('WRF ', contractId);
+    console.log('WRF INPUT ', input);
+
+    const txid = await interactWrite(arweave, jsonKeys, contractId, input);
+    console.log('TX ID ', txid);
+  }
 
   async function writeTransaction(buffer) {
     console.log('DATA IN WRITE ', buffer);
@@ -79,6 +104,8 @@ export const Navbar = () => {
         `${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`
       );
     }
+    console.log('TRANSACTION ID ', transactionA.id);
+    await writeToFeed(keys, contractId, transactionA.id);
   }
 
   //   TODO: Write the image to smart contract with image
@@ -166,6 +193,7 @@ export const Navbar = () => {
                   id="outlined-basic"
                   label="Caption"
                   variant="outlined"
+                  onChange={(e) => setCaption(e.target.value)}
                 />
 
                 <TextField
