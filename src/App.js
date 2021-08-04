@@ -92,9 +92,9 @@ export default function App() {
           return (
             <NFT
               key={Math.random() * 1000}
-              author={nft.author}
               imageUrl={nft.imageurl}
-              owner={nft.owner}
+              owner={nft.ownedBy}
+              id={nft.id}
               price={nft.price}
               caption={nft.caption}
             />
