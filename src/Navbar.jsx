@@ -49,7 +49,7 @@ export const Navbar = () => {
   const [mime, setMime] = useState(null);
   const [imageData, setImageData] = useState(null);
   const [contractId, setContractId] = useState(
-    'pnTOOL1MebQ-c4Dw4zgMKvCdPbvsCC7JTTDmEjAr0qI'
+    'uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g'
   );
 
   useEffect(() => {
@@ -61,11 +61,13 @@ export const Navbar = () => {
   async function writeToFeed(keys, contractId, id) {
     console.log('write to feed clicked!');
     const arweave = Arweave.init();
-    // let url = id;
+    let url =
+      'https://jri3bjkqioqidtpi3feozktl4y3tdoyzuxulr4a7wgvqle3m5c4q.arweave.net/' +
+      id;
     const input = {
       caption,
-      imageurl: 'test',
-      name: 'Varun',
+      imageurl: url,
+      id: uuidv4(),
       function: 'post',
     };
     let jsonKeys = JSON.parse(keys);

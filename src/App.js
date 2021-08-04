@@ -25,19 +25,19 @@ async function getFeed(contractId) {
   return latestState;
 }
 
-async function writeToFeed(keys, contractId) {
-  console.log('write to feed clicked!');
-  const arweave = Arweave.init();
-  const input = {
-    caption: 'FIRST TEST',
-    imageurl: 'google.com',
-    name: 'varun',
-    function: 'post',
-  };
+// async function writeToFeed(keys, contractId) {
+//   console.log('write to feed clicked!');
+//   const arweave = Arweave.init();
+//   const input = {
+//     caption: 'FIRST TEST',
+//     imageurl: 'google.com',
+//     name: 'varun',
+//     function: 'post',
+//   };
 
-  const txid = await interactWrite(arweave, wallet, contractId, input);
-  console.log('TX ID ', txid);
-}
+//   const txid = await interactWrite(arweave, wallet, contractId, input);
+//   console.log('TX ID ', txid);
+// }
 const mockedData = [
   {
     image:
@@ -65,7 +65,7 @@ const mockedData = [
 export default function App() {
   const [feed, setFeed] = useState([]);
   const [contractId, setContractId] = useState(
-    'pnTOOL1MebQ-c4Dw4zgMKvCdPbvsCC7JTTDmEjAr0qI'
+    'uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g'
   );
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function App() {
       setFeed(feed.feed);
     })();
 
-    writeToFeed('blank', contractId);
+    // writeToFeed('blank', contractId);
   }, []);
 
   return (
@@ -85,11 +85,12 @@ export default function App() {
 
       <main className={styles.main}>
         {feed?.map((nft) => {
+          console.log('IMAGE URL ', nft.imageurl);
           return (
             <NFT
               key={Math.random() * 1000}
               author={nft.author}
-              imageUrl={nft.image}
+              imageUrl={nft.imageurl}
               owner={nft.owner}
               price={nft.price}
               caption={nft.caption}
