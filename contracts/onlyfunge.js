@@ -18,9 +18,6 @@ export function handle(state, action) {
     if (typeof action.input.id !== "string" || action.input.id.length === 0) {
       throw new ContractError("Needs id");
     }
-    if (typeof action.input.name !== "string") {
-      throw new ContractError("Name");
-    }
     state.feed.push({
       ownedBy: action.caller,
       caption: action.input.caption,
