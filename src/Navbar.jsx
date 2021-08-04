@@ -163,7 +163,7 @@ export const Navbar = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              OnlyFungs
+              OnlyFung
             </Typography>
             <Button
               variant="contained"
