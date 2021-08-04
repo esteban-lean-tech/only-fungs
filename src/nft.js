@@ -34,30 +34,25 @@ const wallet = {
   qi: 'A4PAqTP3mmHq6epExJClx4CCuhWm8642xTuEg4gpx5aoBJ5_KwnbyQ_O4Vu0KYz1xHwGXrxH7vbcvq6QJ6la4vRyNstOZlVNJC18a-XbIYcjuil6s5Kjqck7Ra06TjJPe3VUdCH_jKVUVeIi1GFMfgLk2-8T6qmCJJTcyC75wvs-KkBO2QwBOqV5IWiACc59L3pdco21cbkKInaz7EDC70xZBaCbaW1jpmrpyuuNTwt3ol6jMIhMWLhcFyHEneQgju5HfVXAR8V5uETge5XU7V6Fk5go7obbIeWxN8toWB_vp_Gm9xMP3-Stq1wD3QzdyIJWmnBpgVk8mgNCzgdv2A',
 };
 
-async function purchaseNFT(contractId) {
+async function purchaseNFT(id, contractId) {
   console.log('Purchase NFT clicked!');
   const arweave = Arweave.init();
-//   const transaction = arweave.createTransaction({
-//       target: '1seRanklLU_1VTGkEk7P0xAwMJfA7owA1JHW5KyZKlY', // wallet address
-//       quantity: arweave.ar.arToWinston('10.5') // amount of AR to send, converted to Winston
-//     }, wallet);
-//   console.log('TX ID ', txid);
-//   await arweave.transaction.post(transaction);
   const input = {
+    id: id,
     function: 'buy',
   };
-
+  console.log(id, "NFTID")
   const txid = await interactWrite(arweave, wallet, contractId, input);
   console.log('TX ID ', txid);
 
 }
 
 
-export default function NFT({author, imageUrl, owner, price, caption}) {
+export default function NFT({imageurl, ownedBy, id, price, caption}) {
     const classes = useStyles();
     const bull = <span className={classes.bullet}>•</span>;
     const [contractId, setContractId] = useState(
-    'lbHyzjQH4oZ4JxYuYzY20iLYEe4mX1p7ApU-S2Ew218'
+      'uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g'
   );
 
     return(
@@ -66,17 +61,17 @@ export default function NFT({author, imageUrl, owner, price, caption}) {
         <CardActionArea>
           <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-                {author}
+                {id}
             </Typography>
           </CardContent>
           <CardMedia
             className={classes.media}
-            image={imageUrl}
+            image={imageurl}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-               {owner &&
-                 <p>Owned by <strong>{owner}</strong></p>
+               {ownedBy &&
+                 <p>Owned by <strong>{ownedBy}</strong></p>
                }
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
@@ -85,7 +80,7 @@ export default function NFT({author, imageUrl, owner, price, caption}) {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" variant="contained" onClick={purchaseNFT(contractId)}color="primary">
+          <Button size="small" variant="contained" onClick={() => purchaseNFT(id, contractId)}color="primary">
             Purchase Ξ {price}
           </Button>
         </CardActions>
