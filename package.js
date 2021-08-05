@@ -10,7 +10,7 @@ inlineSource(htmlpath, {
   attribute: false,
   rootpath: path.resolve('build'),
   // Skip all css types and png formats
-  ignore: ["png", "ico"],
+  ignore: [],
 })
   .then((html) => {
     fs.writeFileSync("./build/index.packaged.html", html);
