@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles, StylesProvider, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -14,11 +14,14 @@ import TextField from '@material-ui/core/TextField';
 import Arweave from 'arweave';
 import { readContract, interactWrite } from 'smartweave';
 import { v4 as uuidv4 } from 'uuid';
+import logo from './logo.png';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100%',
+    width: '100%'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -37,6 +40,16 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
+  logo: {
+    height: 100
+  },
+  nav: {
+    background : 'white'
+  },
+  addButton: {
+    color: 'white',
+    backgroundColor: '#2DABE2'
+  }
 }));
 
 export const Navbar = () => {
@@ -152,7 +165,7 @@ export const Navbar = () => {
   return (
     <div className={classes.root}>
       {authed ? (
-        <AppBar>
+        <AppBar className={classes.nav}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -162,16 +175,16 @@ export const Navbar = () => {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              OnlyFung
-            </Typography>
-            <Button
-              variant="contained"
-              color="secondary"
+            <Toolbar className={classes.title}>
+              <img src={logo} className={classes.logo} alt="OnlyFung"/> 
+            </Toolbar>
+            <Fab 
+              className={classes.addButton} 
+              aria-label="add"
               onClick={(event) => handleOpen(event)}
             >
-              Post a cool image
-            </Button>
+              <AddIcon />
+            </Fab>
           </Toolbar>
 
           <Modal

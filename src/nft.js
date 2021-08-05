@@ -11,6 +11,9 @@ import Swal from 'sweetalert2'
 import Arweave from 'arweave';
 import { interactWrite } from 'smartweave';
 import { useState, useEffect } from 'react';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import Box from '@material-ui/core/Box';
 
 const useStyles = makeStyles({
     root: {
@@ -23,6 +26,43 @@ const useStyles = makeStyles({
       height: 500,
       objectFit: 'contain'
     },
+    likeButton: {
+      color: '#8A939B'
+    },
+    likeButtonGreen: {
+      color: '#00BF13'
+    },
+    dislikeButtonRed: {
+      color: '#BF0A0A'
+    },
+    caption: {
+      color: '#8A939B',
+      marginLeft: '1em',
+      fontSize: '19px',
+    },
+    priceText: {
+      color: '#8A939B',
+      fontStyle: 'Raleway',
+      fontSize: '24px'
+    },
+    bluePriceText: {
+      color: '#2DABE2',
+      fontSize: '24px'
+    },
+    buyButton: {
+      backgroundColor: '#2DABE2',
+      color: 'white',
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 70,
+      paddingRight: 70,
+      fontSize: '26px',
+      textTransform: "none",
+      marginLeft: 90
+    },
+    likeButtonsDiv: {
+      marginLeft: '40%'
+    }
   });
 
 export default function NFT({author, imageUrl, owner, price, caption, id, contractId}) {
@@ -40,6 +80,9 @@ const wallet = {
   q: 'mAFG_Tmni4vNEnU40v4PZ8pGg7-qXWVCZAIf0hKDOgCZTBWHJkDeiFRvLMzwufVVI6CW4tXfREUHig03xU92SrpCAo6GKU7wQ9dirwalOsd6MIn-wNO0pgFe7KQE43OoO3m8cje_SOsDFltYyy98RCduk8328VJ5O1P_4uxuU6-KIzmz0ZvltFkKyEkRJMDinMwUPF6cACz2j2_z4VP2mFCdZBgAgYF8eGqF2F3q3ecMeBeftR7vu1gH6qZk6bcMMBupqOeB6Cxm2fQ-LEMTi_sMKilzWQz0IVuPDOrvFE2U-RlD55jG9Tijizl--4kBueL3A-ts93Q3CP8K-atGNQ',
   qi: 'A4PAqTP3mmHq6epExJClx4CCuhWm8642xTuEg4gpx5aoBJ5_KwnbyQ_O4Vu0KYz1xHwGXrxH7vbcvq6QJ6la4vRyNstOZlVNJC18a-XbIYcjuil6s5Kjqck7Ra06TjJPe3VUdCH_jKVUVeIi1GFMfgLk2-8T6qmCJJTcyC75wvs-KkBO2QwBOqV5IWiACc59L3pdco21cbkKInaz7EDC70xZBaCbaW1jpmrpyuuNTwt3ol6jMIhMWLhcFyHEneQgju5HfVXAR8V5uETge5XU7V6Fk5go7obbIeWxN8toWB_vp_Gm9xMP3-Stq1wD3QzdyIJWmnBpgVk8mgNCzgdv2A',
 };
+
+const [nftLiked, setNftLiked] = useState(false);
+const [nftDisliked, setNftDisliked] = useState(false);
 
 async function purchaseNFT(owner, id, contractId) {
   console.log('Purchase NFT clicked!');
@@ -60,6 +103,22 @@ async function purchaseNFT(owner, id, contractId) {
 
 }
 
+  function likeNft() {
+    setNftLiked(true)
+  }
+
+  function dislikeNft() {
+    setNftDisliked(true)
+  }
+
+  function removeLike () {
+    setNftLiked(false)
+  }
+
+  function removeDislike() {
+    setNftDisliked(false)
+  }
+
 // export default function NFT({imageUrl, ownedBy, id, price, caption}) {
 //     const classes = useStyles();
 //     const bull = <span className={classes.bullet}>•</span>;
@@ -72,31 +131,61 @@ async function purchaseNFT(owner, id, contractId) {
 
         <CardActionArea>
           <CardContent>
-            <Typography className={classes.title} color="textSecondary" gutterBottom>
-                {author}
-            </Typography>
+            <Box flexDirection="row" display='flex'>
+              <div>
+                <Typography gutterBottom><strong>AUTHOR: </strong>author</Typography>
+                <Typography gutterBottom><strong>CURRENT OWNER: </strong>owner</Typography>
+              </div>
+              <div className={classes.likeButtonsDiv}>
+                {nftLiked ? (
+                  <Button size="small" className={classes.likeButtonGreen} onClick={() => {removeLike()}}>
+                    <ThumbUpIcon/>
+                  </Button>
+                ) : (
+                  <Button size="small" className={classes.likeButton} onClick={() => {likeNft()}}>
+                    <ThumbUpIcon/>
+                  </Button>
+                )}
+                {nftDisliked ? (
+                  <Button size="small" className={classes.dislikeButtonRed} onClick={() => {removeDislike()}}>
+                    <ThumbDownIcon/>
+                  </Button>
+                ) : (
+                  <Button size="small" className={classes.likeButton} onClick={() => {dislikeNft()}}>
+                    <ThumbDownIcon/>
+                  </Button>
+                )}
+              </div>
+            </Box>
           </CardContent>
           <CardMedia
             className={classes.media}
             image={imageUrl}
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-               {owner &&
-                 <p>Owned by <strong>{owner}</strong></p>
-               }
-            </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
-              {caption}
+              <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.42553 0L3.8883 9.63636H6.05851V19H0V9.63636L2.26064 0H5.42553ZM16.367 0L14.8298 9.63636H17V19H10.9415V9.63636L13.2021 0H16.367Z" fill="#8A939B" fill-opacity="0.25"/>
+              </svg>
+              <em className={classes.caption}>{caption}</em>
             </Typography>
+            <br></br>
+            <Box flexDirection="row" display='flex'>
+              <Box p={1}>
+                <Typography gutterBottom><strong>CURRENT PRICE</strong>{author}</Typography>
+                <Typography gutterBottom className={classes.priceText}><span className={classes.bluePriceText}>$78.00</span> / 10.2 ⓐ</Typography>
+              </Box>
+              <Box>
+                <CardActions>
+                <Button size="small" variant="contained" className={classes.buyButton} onClick={() => purchaseNFT(owner, id, contractId)}>
+                  Buy Now
+                </Button>
+                </CardActions>
+              </Box>
+            </Box>
           </CardContent>
         </CardActionArea>
-        <CardActions>
 
-          <Button size="small" variant="contained" color="primary" onClick={() => purchaseNFT(owner, id, contractId)}>
-            Purchase Ξ {price}
-          </Button>
-        </CardActions>
       </Card>
     )
 }
