@@ -1,27 +1,32 @@
-import React from 'react';
-import { createStyles, makeStyles, StylesProvider, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import { useState, useEffect } from 'react';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import Backdrop from '@material-ui/core/Backdrop';
-import TextField from '@material-ui/core/TextField';
-import Arweave from 'arweave';
-import { readContract, interactWrite } from 'smartweave';
-import { v4 as uuidv4 } from 'uuid';
-import logo from './logo.png';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import React from "react";
+import {
+  createStyles,
+  makeStyles,
+  StylesProvider,
+  Theme,
+} from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import { useState, useEffect } from "react";
+import Modal from "@material-ui/core/Modal";
+import Fade from "@material-ui/core/Fade";
+import Backdrop from "@material-ui/core/Backdrop";
+import TextField from "@material-ui/core/TextField";
+import Arweave from "arweave";
+import { readContract, interactWrite } from "smartweave";
+import { v4 as uuidv4 } from "uuid";
+import logo from "./logo.png";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    width: '100%'
+    width: "100%",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -30,26 +35,26 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
   logo: {
-    height: 100
+    height: 100,
   },
   nav: {
-    background : 'white'
+    background: "white",
   },
   addButton: {
-    color: 'white',
-    backgroundColor: '#2DABE2'
-  }
+    color: "white",
+    backgroundColor: "#2DABE2",
+  },
 }));
 
 export const Navbar = () => {
@@ -62,44 +67,44 @@ export const Navbar = () => {
   const [mime, setMime] = useState(null);
   const [imageData, setImageData] = useState(null);
   const [contractId, setContractId] = useState(
-    'uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g'
+    "uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g"
   );
 
   useEffect(() => {
-    console.log('THIS IS THE IMAGE ', image);
+    console.log("THIS IS THE IMAGE ", image);
     // TODO: Set auth state here
     setAuthed(true);
   }, []);
 
   async function writeToFeed(keys, contractId, id) {
-    console.log('write to feed clicked!');
+    console.log("write to feed clicked!");
     const arweave = Arweave.init();
     let url =
-      'https://jri3bjkqioqidtpi3feozktl4y3tdoyzuxulr4a7wgvqle3m5c4q.arweave.net/' +
+      "https://jri3bjkqioqidtpi3feozktl4y3tdoyzuxulr4a7wgvqle3m5c4q.arweave.net/" +
       id;
     const input = {
       caption,
       imageurl: url,
       id: uuidv4(),
-      function: 'post',
+      function: "post",
     };
     let jsonKeys = JSON.parse(keys);
-    console.log('WRF ', keys);
-    console.log('WRF ARWEAVE ', arweave);
-    console.log('WRF ', contractId);
-    console.log('WRF INPUT ', input);
+    console.log("WRF ", keys);
+    console.log("WRF ARWEAVE ", arweave);
+    console.log("WRF ", contractId);
+    console.log("WRF INPUT ", input);
 
     const txid = await interactWrite(arweave, jsonKeys, contractId, input);
-    console.log('TX ID ', txid);
+    console.log("TX ID ", txid);
   }
 
   async function writeTransaction(buffer) {
-    console.log('DATA IN WRITE ', buffer);
-    console.log('KEYS IN WRITE ', keys);
+    console.log("DATA IN WRITE ", buffer);
+    console.log("KEYS IN WRITE ", keys);
     let jsonKeys = JSON.parse(keys);
     const arweave = Arweave.init();
 
-    console.log('BUFFER IN WRITE ', buffer);
+    console.log("BUFFER IN WRITE ", buffer);
     let transactionA = await arweave.createTransaction(
       {
         data: buffer,
@@ -107,11 +112,11 @@ export const Navbar = () => {
       jsonKeys
     );
 
-    transactionA.addTag('Content-Type', 'image/png');
+    transactionA.addTag("Content-Type", "image/png");
 
-    console.log('BEFORE TRANSACTION ', transactionA);
+    console.log("BEFORE TRANSACTION ", transactionA);
     await arweave.transactions.sign(transactionA, jsonKeys);
-    console.log('AFTER SIGNING ', transactionA);
+    console.log("AFTER SIGNING ", transactionA);
     let uploader = await arweave.transactions.getUploader(transactionA);
     while (!uploader.isComplete) {
       await uploader.uploadChunk();
@@ -119,7 +124,7 @@ export const Navbar = () => {
         `${uploader.pctComplete}% complete, ${uploader.uploadedChunks}/${uploader.totalChunks}`
       );
     }
-    console.log('TRANSACTION ID ', transactionA.id);
+    console.log("TRANSACTION ID ", transactionA.id);
     await writeToFeed(keys, contractId, transactionA.id);
   }
 
@@ -136,21 +141,21 @@ export const Navbar = () => {
   };
 
   const submitImage = (event) => {
-    console.log('IN METHOD');
+    console.log("IN METHOD");
     var reader = new FileReader();
 
-    console.log('IMAGE SUBMITTED, heres the data ', imageData);
+    console.log("IMAGE SUBMITTED, heres the data ", imageData);
 
     reader.onload = function (e) {
       var arrayBuffer = reader.result;
-      console.log('TYPE OF BUFFER', typeof arrayBuffer);
+      console.log("TYPE OF BUFFER", typeof arrayBuffer);
       writeTransaction(arrayBuffer);
     };
     reader.readAsArrayBuffer(imageData);
   };
 
   const uploadImage = (event) => {
-    console.log('upload image');
+    console.log("upload image");
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       //   TODO: Get MIME PROGRAMATICALLY
@@ -176,10 +181,14 @@ export const Navbar = () => {
               <MenuIcon />
             </IconButton>
             <Toolbar className={classes.title}>
-              <img src={logo} className={classes.logo} alt="OnlyFung"/> 
+              <img
+                src="https://arweave.net/913C9TEUYYimTCQZCkOM1Gwj3vaBngCBceRzjC7jW8k"
+                className={classes.logo}
+                alt="OnlyFung"
+              />
             </Toolbar>
-            <Fab 
-              className={classes.addButton} 
+            <Fab
+              className={classes.addButton}
               aria-label="add"
               onClick={(event) => handleOpen(event)}
             >
@@ -247,7 +256,7 @@ export const Navbar = () => {
                   onClick={submitImage}
                   disabled={!image || !keys}
                 >
-                  {' '}
+                  {" "}
                   Post Image
                 </Button>
               </div>

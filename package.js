@@ -8,9 +8,9 @@ const htmlpath = path.resolve("./build/index.html");
 inlineSource(htmlpath, {
   compress: true,
   attribute: false,
-  rootpath: path.resolve('build'),
+  rootpath: path.resolve("build"),
   // Skip all css types and png formats
-  ignore: [],
+  ignore: ["png"],
 })
   .then((html) => {
     fs.writeFileSync("./build/index.packaged.html", html);
