@@ -21,6 +21,7 @@ const wallet = {
 
 async function getFeed(contractId) {
   const arweaveInstance = Arweave.init();
+  console.log('CONTRACT INSTANCE', contractId);
   const latestState = await readContract(arweaveInstance, contractId);
   console.log('FEED ', latestState);
   return latestState;
@@ -66,20 +67,18 @@ const mockedData = [
 export default function App() {
   const [feed, setFeed] = useState([]);
   const [contractId, setContractId] = useState(
-    'uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g'
+    'lp_CG_vsXztZ0bTQHdnZDf3InMQXAWF5GysjbRwXq8g'
   );
 
   useEffect(() => {
     (async () => {
       const feed = await getFeed(contractId);
       console.log('THIS IS FEED ', feed.feed);
-      setFeed(feed.feed);
+      setFeed(feed.feed.reverse());
     })();
 
     // writeToFeed('blank', contractId);
   }, []);
-
-  
 
   return (
     <div>
@@ -93,7 +92,9 @@ export default function App() {
             <NFT
               key={Math.random() * 1000}
               imageUrl={nft.imageurl}
-              owner={nft.ownedBy}
+              publicKey={nft.ownedBy}
+              ownedByHr={nft.ownedByHr}
+              author={nft.author}
               id={nft.id}
               price={nft.price}
               caption={nft.caption}
