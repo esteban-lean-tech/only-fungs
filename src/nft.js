@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Box from '@material-ui/core/Box';
+import "@fontsource/raleway";
 
 const useStyles = makeStyles({
     root: {
@@ -41,15 +42,17 @@ const useStyles = makeStyles({
       color: '#8A939B',
       marginLeft: '1em',
       fontSize: '19px',
+      fontFamily: 'Raleway',
     },
     priceText: {
       color: '#8A939B',
-      fontStyle: 'Raleway',
+      fontFamily: 'Raleway',
       fontSize: '24px'
     },
     bluePriceText: {
       color: '#2DABE2',
-      fontSize: '24px'
+      fontSize: '24px',
+      fontFamily: 'Raleway',
     },
     buyButton: {
       backgroundColor: '#2DABE2',
@@ -61,11 +64,15 @@ const useStyles = makeStyles({
       fontSize: '21px',
       textTransform: "none",
       marginLeft: 90,
-      fontWeight: 700
+      fontWeight: 700,
+      fontFamily: 'Raleway',
     },
     likeButtonsDiv: {
       display: "flex",
       justifyContent: "space-between"
+    },
+    currentPrice: {
+      fontFamily: 'Raleway'
     }
   });
 
@@ -177,7 +184,7 @@ async function purchaseNFT(owner, id, contractId) {
             <br></br>
             <Box flexDirection="row" display='flex' justifyContent="space-between" alignItems="center">
               <Box p={1}>
-                <Typography variant="overline" gutterBottom><strong>CURRENT PRICE</strong></Typography>
+                <Typography variant="overline" gutterBottom className={classes.currentPrice}><strong>CURRENT PRICE</strong></Typography>
                 <Typography gutterBottom className={classes.priceText}><span className={classes.bluePriceText}>$78.00</span> / 10.2 ⓐ</Typography>
               </Box>
               <Box>
