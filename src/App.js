@@ -6,6 +6,16 @@ import { readContract, interactWrite } from 'smartweave';
 import Arweave from 'arweave';
 import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: "#fafafa"
+  },
+   main: {
+    maxWidth: 825,
+  },
+  
+}));
+
 const wallet = {
   d: 'IN7pf8Fyw11Qo6yCs7AGnZuSMK0wr9BfnZ2obOEHrysFzO_7mUSBMQ5NxaRwKwUuzMLAieO4Ilf8Xy4E8-0JNpQrKT0ikujl6vwIVSv1iuH3_5PXFKU3AvN5GpQm1LVLY9pHNNEviq95uhYfNbwKEZm6qDMdyQcfrp0qDyF33824SN1Jr7h9PzPOvBHBi_WYzHVYbfe282bzx5GmQZiFHHfJS4jxvJt1ZwEJm5U-c6LveZBVEpir81jea3i7rU-YrsolqnKD4dUppSMANvHmMIjxXCM6CWerwYVuFzH9qOq0leeco8F79rGMfgnz4Il9SlSc3YasHtf-gmZdy6PTx9eRTUeOq6LhFLMFqw3a14_bmzophg2pRP01w2po3yDQXWxRLrTSwrh4H-Y8RuG8wMB-Y9oAusavr7MIiXUih4vFNg8GBNzpvWdRxhqQiKQe1i_hq8D-Vv5NFJ_MAHg98-eeO5a2GDGrYqWrs4fSS1kyAIMJayIoHjCDMDsgX4KO0zmmMbbqzD2Hx8bjxPhxV7fAAu8zQQ2hsnFOHY4DCEg9EctoET7iq-r-wqxFXpRWnGezAeH4aNsGVoRrsaO4AlOjCWGlUHeRtQATzTi2FBEVwULRNM6i8LqTYbfZGcUh6V2G-TUOy8lqkYBCkpEZKiP2w40YAjHPdUStNdx2M2E',
   dp: 'UHgOFemGcpcKUIhVg9dvGFGGXH914WshkPbtILgnszWKd-5LJsBK4UabgIdFa0CGHnfH_xgozq0bzEtW1vwoAD5RBvn9lQn-MqDBxbsBBcvYkw600vkoUAerrTNHOMJKiu0IFqWwpkRERyku-9e_qAQVQ5Cs0kR4MgfJCZLVVq8voDZ9VUy3SK3hvemdT54I8WZ1Q5sD1jx1nmZjaDDwUfFTBPC63wzchDPT7DndncWDJXX93Rt7XF52tcfph8ju5HHhHO6-PcRXtdCfR1pnjDw88DPowFByBKm4QA1_U4ReplY4hTiLTsTFH3yFET0jYf1hOPbo_7cv21eQXM9urQ',
@@ -64,6 +74,7 @@ const mockedData = [
 ];
 
 export default function App() {
+  const classes = useStyles();
   const [feed, setFeed] = useState([]);
   const [contractId, setContractId] = useState(
     'uOfZLIaT4qaLDXJau0twfkgqnPQhwm86Kjw02w1O3-g'

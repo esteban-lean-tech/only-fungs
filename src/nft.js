@@ -18,7 +18,6 @@ import Box from '@material-ui/core/Box';
 const useStyles = makeStyles({
     root: {
       width: 600,
-      height: 750,
       marginTop: 30
     },
     media: {
@@ -27,12 +26,15 @@ const useStyles = makeStyles({
       objectFit: 'contain'
     },
     likeButton: {
+      width: "48%",
       color: '#8A939B'
     },
     likeButtonGreen: {
+      width: "48%",
       color: '#00BF13'
     },
     dislikeButtonRed: {
+      width: "48%",
       color: '#BF0A0A'
     },
     caption: {
@@ -52,16 +54,18 @@ const useStyles = makeStyles({
     buyButton: {
       backgroundColor: '#2DABE2',
       color: 'white',
-      paddingTop: 10,
-      paddingBottom: 10,
-      paddingLeft: 70,
-      paddingRight: 70,
-      fontSize: '26px',
+      paddingTop: 8,
+      paddingBottom: 8.5,
+      paddingLeft: 50,
+      paddingRight: 50,
+      fontSize: '21px',
       textTransform: "none",
-      marginLeft: 90
+      marginLeft: 90,
+      fontWeight: 700
     },
     likeButtonsDiv: {
-      marginLeft: '40%'
+      display: "flex",
+      justifyContent: "space-between"
     }
   });
 
@@ -127,14 +131,15 @@ async function purchaseNFT(owner, id, contractId) {
 //   );
 
     return(
-        <Card className={classes.root}>
+        <Card className={classes.root} disableRipple>
 
-        <CardActionArea>
+        
           <CardContent>
-            <Box flexDirection="row" display='flex'>
+            <Box flexDirection="row" display='flex' justifyContent="space-between">
               <div>
-                <Typography gutterBottom><strong>AUTHOR: </strong>author</Typography>
-                <Typography gutterBottom><strong>CURRENT OWNER: </strong>owner</Typography>
+                <Typography variant="overline" gutterBottom><strong>AUTHOR:</strong> <Typography variant="body1" component="span">{author}</Typography></Typography> 
+                <br/>
+                <Typography variant="overline" gutterBottom><strong>CURRENT OWNER:</strong> <Typography variant="body1" component="span">{owner}</Typography></Typography>
               </div>
               <div className={classes.likeButtonsDiv}>
                 {nftLiked ? (
@@ -162,7 +167,7 @@ async function purchaseNFT(owner, id, contractId) {
             className={classes.media}
             image={imageUrl}
           />
-          <CardContent>
+          <CardContent style={{paddingBottom: 12}}>
             <Typography variant="body2" color="textSecondary" component="p">
               <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.42553 0L3.8883 9.63636H6.05851V19H0V9.63636L2.26064 0H5.42553ZM16.367 0L14.8298 9.63636H17V19H10.9415V9.63636L13.2021 0H16.367Z" fill="#8A939B" fill-opacity="0.25"/>
@@ -170,21 +175,21 @@ async function purchaseNFT(owner, id, contractId) {
               <em className={classes.caption}>{caption}</em>
             </Typography>
             <br></br>
-            <Box flexDirection="row" display='flex'>
+            <Box flexDirection="row" display='flex' justifyContent="space-between" alignItems="center">
               <Box p={1}>
-                <Typography gutterBottom><strong>CURRENT PRICE</strong>{author}</Typography>
+                <Typography variant="overline" gutterBottom><strong>CURRENT PRICE</strong></Typography>
                 <Typography gutterBottom className={classes.priceText}><span className={classes.bluePriceText}>$78.00</span> / 10.2 ⓐ</Typography>
               </Box>
               <Box>
                 <CardActions>
-                <Button size="small" variant="contained" className={classes.buyButton} onClick={() => purchaseNFT(owner, id, contractId)}>
+                <Button size="small" variant="contained" disableRipple className={classes.buyButton} onClick={() => purchaseNFT(owner, id, contractId)}>
                   Buy Now
                 </Button>
                 </CardActions>
               </Box>
             </Box>
           </CardContent>
-        </CardActionArea>
+        
 
       </Card>
     )

@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    justifyContent: "space-between"
   },
   modal: {
     display: "flex",
@@ -46,7 +47,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
   },
   logo: {
-    height: 100,
+    height: 85,
+    marginTop: 5,
   },
   nav: {
     background: "white",
@@ -170,30 +172,31 @@ export const Navbar = () => {
   return (
     <div className={classes.root}>
       {authed ? (
-        <AppBar className={classes.nav}>
+        <AppBar className={classes.nav} elevation2>
           <Toolbar>
-            <IconButton
+            {/* <IconButton
               edge="start"
               className={classes.menuButton}
               color="inherit"
               aria-label="menu"
             >
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Toolbar className={classes.title}>
               <img
                 src="https://arweave.net/913C9TEUYYimTCQZCkOM1Gwj3vaBngCBceRzjC7jW8k"
                 className={classes.logo}
                 alt="OnlyFung"
               />
-            </Toolbar>
-            <Fab
+               <Fab
               className={classes.addButton}
               aria-label="add"
               onClick={(event) => handleOpen(event)}
             >
               <AddIcon />
             </Fab>
+            </Toolbar>
+           
           </Toolbar>
 
           <Modal
@@ -275,7 +278,7 @@ export const Navbar = () => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title}>
-              OnlyFungs
+              OnlyFung
             </Typography>
             <Button color="inherit">Login to post your NFT</Button>
           </Toolbar>
